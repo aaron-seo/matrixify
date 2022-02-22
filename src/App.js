@@ -39,6 +39,7 @@ let App = (props) => {
 
     let login = () => {
         const CLIENT_ID = 'f7df2a7171e64f4c821857bf2e948920';
+        //const REDIRECT_URI = 'https://matrixify.aaronseo.dev/';
         const REDIRECT_URI = 'http://localhost:3000/callback';
 
         const newState = generateRandomString(16);

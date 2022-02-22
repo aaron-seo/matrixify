@@ -36,6 +36,7 @@ let TopTracks = () => {
                 <div>
                     { topTracks.map( track => 
                         <div> {track.name} </div>
+                    
                     )}
                 </div>
             ) : (
