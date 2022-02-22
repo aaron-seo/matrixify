@@ -1,4 +1,6 @@
+import { Route, Navigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
+import TopTracks from './components/TopTracks';
 
 let generateRandomString = (length) => {
     let text = '';
@@ -25,10 +27,14 @@ let getHashParams = () => {
 
 let App = (props) => {
     const [state, setState] = useState('');
-    const [topTracks, setTopTracks] = useState({});
+    const [topTracks, setTopTracks] = useState();
     const [authd, setAuthd] = useState(false);
+    const [accessToken, setAccessToken] = useState();
+    const [expTimestamp, setExpTimestamp] = useState('');
 
     useEffect(() => {
+        let params = getHashParams();
+        setAccessToken(params.access_token);
     });
 
     let login = () => {
@@ -46,28 +52,22 @@ let App = (props) => {
         url += '&scope=' + encodeURIComponent(scope);
         url += '&redirect_uri=' + encodeURIComponent(REDIRECT_URI);
         url += '&state=' + encodeURIComponent(state);
+        url += '&show_dialog=true';
 
-        let popup = window.open(url);
-
-        window.spotifyCallback = (payload) => {
-            popup.close();
-
-            fetch('https://api.spotify.com/v1/me/top/tracks', {
-                headers: {
-                    'Authorization': 'Bearer ' + payload
-                }
-            }).then(response => {
-                return response.json();
-            }).then(data => {
-                setTopTracks(data);
-            });
-        }
+        window.open(url);
     }
 
-    return (
-        <div className='App'>
-            <button onClick={() => login()}>Login</button>
-        </div>
-    );
+	return (
+		<div className='App'>
+            <h1>matrixify</h1>
+        { !accessToken ? (
+            <button onClick={login}>Login</button>
+        ) : (
+            <TopTracks />
+        )
+        }
+		</div>
+	);
+
 }
 export default App;

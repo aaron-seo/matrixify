@@ -1,0 +1,31 @@
+import React, { useState, useEffect }from 'react';
+
+let TopTracks = (getHash) => {
+    const [topTracks, setTopTracks] = useState();
+
+    useEffect( () => {
+        console.log('testtt');
+        let accessToken = getHash();
+        console.log(accessToken);
+        fetch('https://api.spotify.com/v1/me/top/tracks', {
+            headers : {
+                'Authorization' : 'Bearer ' + accessToken
+            }
+        }).then( (response) => {
+            return response.json();
+        }).then( (data) => {
+            setTopTracks(data.items);
+            console.log('test');
+            console.log(data);
+        });
+    });
+
+    return (
+        <div className='TopTracks'>
+            <h2>Top Tracks</h2>
+            { topTracks}
+        </div>
+    );
+}
+
+export default TopTracks;
