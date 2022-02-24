@@ -3,13 +3,13 @@ import React, { useState, useEffect }from 'react';
 let MatrixTerminal = (text) => {
     const [displayText, setDisplayText] = useState('');
 
-    // pass this as a prop later, and make this component more general/reusable
     const charIndex = React.useRef(0);
     const lineIndex = React.useRef(0);
 
     // Inspired by @pilchard's answer:
     // https://stackoverflow.com/a/65735282
     useEffect( () => {
+        const text = ['Wake up, Neo.', 'The Matrix has you...', 'Follow the white rabbit...', 'Knock knock, Neo.'];
         let tick = () => {
             setDisplayText(prev => prev + text[lineIndex.current][charIndex.current]); // 0 should be lineIndex
             charIndex.current++;

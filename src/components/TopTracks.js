@@ -1,5 +1,5 @@
 import React, { useState, useEffect }from 'react';
-import MatrixTerminal from './MatrixTerminal';
+//import MatrixTerminal from './MatrixTerminal';
 
 let getHashParams = () => {
     const hashParams = {};
@@ -28,14 +28,18 @@ let TopTracks = () => {
         }).then( (data) => {
             console.log(data.items);
             setTopTracks(data.items);
+            console.log(topTracks);
 
+            /*
             for (let track in data.items) {
                 setTracksText(tracksText + track.name);
             }
+            */
 
         });
     }, []);
 
+    /*
     return (
         <div className='TopTracks'>
             <h2>Top Tracks</h2>
@@ -46,14 +50,14 @@ let TopTracks = () => {
             )}
         </div>
     );
-    /*
+    */
     return (
         <div className='TopTracks'>
             <h2>Top Tracks</h2>
             { topTracks ? (
                 <div>
                     { topTracks.map( track => 
-                        <div> {track.name} </div>
+                        <div> {track.name} - {track.artists[0].name}</div>
                     
                     )}
                 </div>
@@ -62,7 +66,6 @@ let TopTracks = () => {
             )}
         </div>
     );
-    */
 }
 
 export default TopTracks;

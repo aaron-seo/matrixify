@@ -29,18 +29,23 @@ let getHashParams = () => {
 let App = (props) => {
     const [state, setState] = useState();
     const [accessToken, setAccessToken] = useState();
+    const [introDone, setIntroDone] = useState(false);
 
     const introText = ['Wake up, Neo.', 'The Matrix has you...', 'Follow the white rabbit...', 'Knock knock, Neo.'];
 
     useEffect(() => {
+        setTimeout( () => {
+            setIntroDone(true);
+        }, 30000);
+
         let params = getHashParams();
         setAccessToken(params.access_token);
     });
 
     let login = () => {
-        const CLIENT_ID = 'f7df2a7171e64f4c821857bf2e948920';
-        //const REDIRECT_URI = 'https://matrixify.aaronseo.dev/';
-        const REDIRECT_URI = 'http://localhost:3000/callback';
+        const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
+        const REDIRECT_URI = 'https://matrixify.aaronseo.dev/';
+        //const REDIRECT_URI = 'http://localhost:3000/callback';
 
         const newState = generateRandomString(16);
 
@@ -63,7 +68,12 @@ let App = (props) => {
         { !accessToken ? (
             <div>
                 <MatrixTerminal text={introText} />
-                <a onClick={login}>(Insert white rabbit here)</a>
+                { !introDone ? (
+                    <p>test</p>
+                ) : (
+                    <a onClick={login}>(Insert white rabbit here)</a>
+                )
+                }
             </div>
         ) : (
             <TopTracks />
