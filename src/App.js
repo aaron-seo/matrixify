@@ -36,7 +36,7 @@ let App = (props) => {
     useEffect(() => {
         setTimeout( () => {
             setIntroDone(true);
-        }, 30000);
+        }, 23000);
 
         let params = getHashParams();
         setAccessToken(params.access_token);
@@ -69,9 +69,11 @@ let App = (props) => {
             <div>
                 <MatrixTerminal text={introText} />
                 { !introDone ? (
-                    <p>test</p>
+                    <span></span>
                 ) : (
-                    <a onClick={login}>(Insert white rabbit here)</a>
+                    <div className='rabbit'>
+                    <a href="" onClick={login}>&#128007;</a>
+                    </div>
                 )
                 }
             </div>
