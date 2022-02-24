@@ -1,6 +1,8 @@
 import { Route, Navigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import TopTracks from './components/TopTracks';
+import MatrixTerminal from './components/MatrixTerminal';
+import './styles/index.css';
 
 let generateRandomString = (length) => {
     let text = '';
@@ -24,13 +26,11 @@ let getHashParams = () => {
     return hashParams;
 }
 
-
 let App = (props) => {
-    const [state, setState] = useState('');
-    const [topTracks, setTopTracks] = useState();
-    const [authd, setAuthd] = useState(false);
+    const [state, setState] = useState();
     const [accessToken, setAccessToken] = useState();
-    const [expTimestamp, setExpTimestamp] = useState('');
+
+    const introText = ['Wake up, Neo.', 'The Matrix has you...', 'Follow the white rabbit...', 'Knock knock, Neo.'];
 
     useEffect(() => {
         let params = getHashParams();
@@ -60,9 +60,11 @@ let App = (props) => {
 
 	return (
 		<div className='App'>
-            <h1>matrixify</h1>
         { !accessToken ? (
-            <button onClick={login}>Login</button>
+            <div>
+                <MatrixTerminal text={introText} />
+                <a onClick={login}>(Insert white rabbit here)</a>
+            </div>
         ) : (
             <TopTracks />
         )

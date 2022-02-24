@@ -1,4 +1,5 @@
 import React, { useState, useEffect }from 'react';
+import MatrixTerminal from './MatrixTerminal';
 
 let getHashParams = () => {
     const hashParams = {};
@@ -14,6 +15,7 @@ let getHashParams = () => {
 
 let TopTracks = () => {
     const [topTracks, setTopTracks] = useState();
+    const [tracksText, setTracksText] = useState([]);
 
     useEffect( () => {
         let token = getHashParams().access_token;
@@ -26,9 +28,25 @@ let TopTracks = () => {
         }).then( (data) => {
             console.log(data.items);
             setTopTracks(data.items);
+
+            for (let track in data.items) {
+                setTracksText(tracksText + track.name);
+            }
+
         });
     }, []);
 
+    return (
+        <div className='TopTracks'>
+            <h2>Top Tracks</h2>
+            { topTracks ? (
+                <MatrixTerminal text={'test'} />
+            ) : (
+                <p>Loading...</p>
+            )}
+        </div>
+    );
+    /*
     return (
         <div className='TopTracks'>
             <h2>Top Tracks</h2>
@@ -44,6 +62,7 @@ let TopTracks = () => {
             )}
         </div>
     );
+    */
 }
 
 export default TopTracks;
